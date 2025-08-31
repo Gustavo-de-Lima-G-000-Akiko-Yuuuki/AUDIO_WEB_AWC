@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador de Cancelamento de Ruído Ativo</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Simulador de Cancelamento de Ruído Ativo</h1>
+            <p>Interface Web para Processamento de Áudio em Tempo Real</p>
+        </header>
+
+        <main>
+            <!-- Status Section -->
+            <section class="status-section">
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot" id="statusDot"></span>
+                    <span id="statusText">Desconectado</span>
+                </div>
+                <div class="connection-controls">
+                    <button id="connectBtn" class="btn btn-primary">Conectar</button>
+                    <button id="disconnectBtn" class="btn btn-secondary" disabled>Desconectar</button>
+                </div>
+            </section>
+
+            <!-- Audio Controls Section -->
+            <section class="audio-controls">
+                <div class="control-group">
+                    <button id="startAudioBtn" class="btn btn-success" disabled>Iniciar Áudio</button>
+                    <button id="stopAudioBtn" class="btn btn-danger" disabled>Parar Áudio</button>
+                </div>
+                <div class="volume-control">
+                    <label for="volumeSlider">Volume de Saída:</label>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                    <span id="volumeValue">50%</span>
+                </div>
+            </section>
+
+            <!-- Configuration Section -->
+            <section class="config-section">
+                <h2>Configurações de Processamento</h2>
+                
+                <div class="config-grid">
+                    <!-- Operation Mode -->
+                    <div class="config-group">
+                        <h3>Modo de Operação</h3>
+                        <div class="radio-group">
+                            <label>
+                                <input type="radio" name="operationMode" value="1" checked>
+                                Inversão de Fase (Simulação ANC)
+                            </label>
+                            <label>
+                                <input type="radio" name="operationMode" value="2">
+                                Redução de Ruído do Microfone
+                            </label>
+                            <label>
+                                <input type="radio" name="operationMode" value="3">
+                                Filtro Avançado
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Filter Type -->
+                    <div class="config-group">
+                        <h3>Tipo de Filtro</h3>
+                        <select id="filterType">
+                            <option value="highpass">Passa-Alta</option>
+                            <option value="lowpass">Passa-Baixa</option>
+                            <option value="bandpass">Passa-Banda</option>
+                            <option value="bandstop">Rejeita-Banda</option>
+                        </select>
+                    </div>
+
+                    <!-- Noise Threshold -->
+                    <div class="config-group">
+                        <h3>Limiar de Ruído</h3>
+                        <input type="range" id="noiseThreshold" min="0.001" max="0.5" step="0.001" value="0.05">
+                        <span id="noiseThresholdValue">0.05</span>
+                    </div>
+
+                    <!-- Low Cut Frequency -->
+                    <div class="config-group">
+                        <h3>Frequência de Corte Baixa (Hz)</h3>
+                        <input type="range" id="lowCutFreq" min="50" max="2000" step="10" value="300">
+                        <span id="lowCutFreqValue">300</span>
+                    </div>
+
+                    <!-- High Cut Frequency -->
+                    <div class="config-group">
+                        <h3>Frequência de Corte Alta (Hz)</h3>
+                        <input type="range" id="highCutFreq" min="1000" max="20000" step="100" value="8000">
+                        <span id="highCutFreqValue">8000</span>
+                    </div>
+
+                    <!-- Volume Gain -->
+                    <div class="config-group">
+                        <h3>Ganho de Volume</h3>
+                        <input type="range" id="volumeGain" min="0.1" max="3.0" step="0.1" value="1.0">
+                        <span id="volumeGainValue">1.0</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Metrics Section -->
+            <section class="metrics-section">
+                <h2>Métricas em Tempo Real</h2>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <label>RMS:</label>
+                        <span id="rmsValue">0.000</span>
+                    </div>
+                    <div class="metric">
+                        <label>Pico:</label>
+                        <span id="peakValue">0.000</span>
+                    </div>
+                    <div class="metric">
+                        <label>Freq. Dominante:</label>
+                        <span id="dominantFreqValue">0 Hz</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visualization Section -->
+            <section class="visualization-section">
+                <h2>Visualização</h2>
+                <div class="canvas-container">
+                    <canvas id="waveformCanvas" width="800" height="200"></canvas>
+                    <canvas id="spectrumCanvas" width="800" height="200"></canvas>
+                </div>
+            </section>
+
+            <!-- Log Section -->
+            <section class="log-section">
+                <h2>Log de Sistema</h2>
+                <div id="logContainer" class="log-container">
+                    <p>Sistema iniciado. Aguardando conexão...</p>
+                </div>
+                <button id="clearLogBtn" class="btn btn-secondary">Limpar Log</button>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Manus AI - Simulador de Cancelamento de Ruído Ativo</p>
+        </footer>
+    </div>
+
+    <script src="/static/audio-processor.js"></script>
+    <script src="/static/visualization.js"></script>
+    <script src="/static/app.js"></script>
+</body>
+</html>
+
